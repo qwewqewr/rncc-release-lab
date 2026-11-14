@@ -1,0 +1,1 @@
+Operator lookup is cached.
