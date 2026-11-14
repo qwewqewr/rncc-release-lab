@@ -1,0 +1,46 @@
+# git-cliff configuration for rncc_calc: plain-text groups, final tags only.
+
+[changelog]
+header = """
+# Changelog
+
+All notable changes to rncc_calc are listed here, newest first.
+
+<!-- git-cliff: end of header -->
+"""
+header_marker = "<!-- git-cliff: end of header -->"
+body = """
+{% if version %}\
+    ## [{{ version | trim_start_matches(pat="v") }}] - {{ timestamp | date(format="%Y-%m-%d") }}
+{% else %}\
+    ## [unreleased]
+{% endif %}\
+{% for group, commits in commits | group_by(attribute="group") %}
+    ### {{ group | striptags | trim }}
+    {% for commit in commits %}
+        - {% if commit.scope %}**{{ commit.scope }}**: {% endif %}\
+            {% if commit.breaking %}[breaking] {% endif %}\
+            {{ commit.message }}\
+    {% endfor %}
+{% endfor %}
+"""
+trim = true
+
+[git]
+conventional_commits = true
+filter_unconventional = true
+tag_pattern = '^v[0-9]+\.[0-9]+\.[0-9]+$'
+sort_commits = "oldest"
+commit_parsers = [
+    { message = "^feat", group = "<!-- 0 -->Features" },
+    { message = "^fix", group = "<!-- 1 -->Bug Fixes" },
+    { message = "^perf", group = "<!-- 2 -->Performance" },
+    { message = "^revert", group = "<!-- 3 -->Reverts" },
+    { message = "^docs", group = "<!-- 4 -->Documentation" },
+    { message = '^chore\((main|staging|production)\)', skip = true },
+    { message = "^(build|chore|ci|refactor|style|test)", skip = true },
+]
+
+[bump]
+features_always_bump_minor = true
+breaking_always_bump_major = true
