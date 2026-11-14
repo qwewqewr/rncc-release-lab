@@ -1,20 +1,24 @@
 name: deploy
 
 on:
-  push:
-    branches: [staging, production]
+  workflow_call:
+    inputs:
+      environment:
+        description: GitHub Environment to deploy to (staging or production)
+        required: true
+        type: string
 
 permissions:
   contents: read
 
 concurrency:
-  group: deploy-${{ github.ref_name }}
+  group: deploy-${{ inputs.environment }}
   cancel-in-progress: false
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: ${{ github.ref_name }}
+    environment: ${{ inputs.environment }}
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
@@ -25,5 +29,5 @@ jobs:
       - name: Deploy (stand-in)
         run: |
           version="$(python -m rncc_calc --version)"
-          echo "Deploying rncc_calc ${version} to ${GITHUB_REF_NAME} at ${GITHUB_SHA}"
-          echo "### rncc_calc ${version} deployed to ${GITHUB_REF_NAME}" >> "$GITHUB_STEP_SUMMARY"
+          echo "Deploying rncc_calc ${version} to ${{ inputs.environment }} at ${GITHUB_SHA}"
+          echo "### rncc_calc ${version} deployed to ${{ inputs.environment }}" >> "$GITHUB_STEP_SUMMARY"
