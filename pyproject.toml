@@ -1,0 +1,20 @@
+[build-system]
+requires = ["hatchling==1.27.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "rncc-calc"
+version = "0.1.0"
+description = "Tiny calculator used by the Release Notes and Commit Convention labs"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []
+
+[project.scripts]
+rncc-calc = "rncc_calc.__main__:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/rncc_calc"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
