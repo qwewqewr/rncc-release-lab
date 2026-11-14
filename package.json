@@ -4,9 +4,18 @@
   "devDependencies": {
     "@commitlint/cli": "21.2.4",
     "@commitlint/config-conventional": "21.2.4",
-    "husky": "9.1.7"
+    "@commitlint/cz-commitlint": "21.2.4",
+    "commitizen": "4.3.2",
+    "husky": "9.1.7",
+    "inquirer": "9.3.8"
   },
   "scripts": {
-    "prepare": "husky"
+    "prepare": "husky",
+    "commit": "cz"
+  },
+  "config": {
+    "commitizen": {
+      "path": "@commitlint/cz-commitlint"
+    }
   }
 }
