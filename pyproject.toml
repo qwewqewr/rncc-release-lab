@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "rncc-calc"
-version = "0.2.0"
+version = "0.3.0-rc.1"
 description = "Tiny calculator used by the Release Notes and Commit Convention labs"
 readme = "README.md"
 requires-python = ">=3.12"
