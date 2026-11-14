@@ -1,10 +1,11 @@
-"""Four operators. Later labs add more through conventional commits."""
+"""Five operators. Later labs add more through conventional commits."""
 
 OPERATORS = {
     "+": lambda a, b: a + b,
     "-": lambda a, b: a - b,
     "*": lambda a, b: a * b,
     "/": lambda a, b: a / b,
+    "^": lambda a, b: a ** b,
 }
 
 
